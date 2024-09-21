@@ -158,23 +158,18 @@ public class Compilador extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void EjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EjecutarActionPerformed
-        String texto = Compiladoristo.getText().trim();
+        String texto = Compiladoristo.getText();
+        List<String[]> tokens = AnalizadorLexico.analizar(texto);
+        AnalizadorLexico.actualizarTabla((DefaultTableModel) Analisis_Lexico.getModel(), tokens);
 
-        // Dividimos el texto ingresado por líneas
         String[] lineas = texto.split("\\r?\\n");
-
         for (String linea : lineas) {
-            linea = linea.trim();  // Eliminar espacios en blanco
-
-            // Verificar si la línea es una declaración enum
-            if (linea.startsWith("#enum")) {
-                String error = Validaciones.validarEnum(linea);
-                if (error != null) {
-                    Salidas.append(error + "\n");
-                    continue;  // Si hay un error, saltamos a la siguiente línea
-                }
+            linea = linea.trim();
+            // Verificamos si la línea no termina con una coma
+            if (!linea.endsWith(",")) {
+                Salidas.append("Error: La declaración debe terminar con una coma: " + linea + "\n");
+                continue; // Saltamos a la siguiente línea
             }
-
             // Validamos si es una declaración de variable
             if (AnalizadorLexico.validarDeclaracion(linea)) {
                 try {
@@ -187,9 +182,9 @@ public class Compilador extends javax.swing.JPanel {
             } else if (AnalizadorLexico.validarOperacion(linea)) {
                 try {
                     double resultado = AnalizadorLexico.evaluarExpresion(linea);
-                    Salidas.append("Resultado de " + linea + ": " + resultado + "\n");
-                } catch (Exception ex) {
-                    Salidas.append("Error al evaluar la expresión: " + linea + ". Verifica que las variables estén declaradas correctamente.\n");
+                    Salidas.append("Resultado de la operación: " + resultado + "\n");
+                } catch (Exception e) {
+                    Salidas.append("Error en la operación: " + linea + "\n");
                 }
             } else {
                 String error = Validaciones.validarDeclaracion(linea);

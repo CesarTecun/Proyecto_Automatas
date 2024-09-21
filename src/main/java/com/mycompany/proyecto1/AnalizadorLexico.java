@@ -22,7 +22,7 @@ public class AnalizadorLexico {
             while (matcher.find()) {
                 String token = matcher.group(1);
                 if (token.equals("#enum")) {
-                    tokens.add(new String[]{"Keyword", token}); // Mostar que es una keyword o palabra clave 
+                    tokens.add(new String[]{"Palabra clave", token}); // Mostrar que es una palabra clave 
                 } else if (token.matches("\\d+(\\.\\d+)?")) {
                     tokens.add(new String[]{"Número", token});
                 } else if (token.matches("[a-zA-Z_][a-zA-Z0-9_]*")) {
@@ -49,10 +49,10 @@ public class AnalizadorLexico {
         }
     }
 
-    // Validar declaración de variables como #enum numero = 10, o #Text variable = "texto",
+    // Validar declaración de variables como #enum numero = 10, o #Text variable = "texto"
     public static boolean validarDeclaracion(String texto) {
-        String declaracionRegex = "#(enum|int|float|double)\\s+[a-zA-Z_][a-zA-Z0-9_]*\\s*=\\s*\\d+(\\.\\d+)?\\s*,?"; // Para números con punto decimal opcional
-        String declaracion2Regex = "#(Text|String|char)\\s+[a-zA-Z_][a-zA-Z0-9_]*\\s*=\\s*\"[^\"]*\"\\s*,?"; // Para variables de texto
+        String declaracionRegex = "#(enum|int|float|double)\\s+[a-zA-Z_][a-zA-Z0-9_]*\\s*=\\s*\\d+(\\.\\d+)?\\s*,$"; // Para números
+        String declaracion2Regex = "#(Text|String|char)\\s+[a-zA-Z_][a-zA-Z0-9_]*\\s*=\\s*\"[^\"]*\"\\s*,$"; // Para texto
         return texto.matches(declaracionRegex) || texto.matches(declaracion2Regex);
     }
 
@@ -65,11 +65,11 @@ public class AnalizadorLexico {
         // Determina si el valor es numérico o de texto
         if (partes[1].contains("\"")) {
             // Valor de tipo texto (cadena)
-            String valor = partes[1].replace(",", "").replace("\"", "").replace(",", "").trim();
+            String valor = partes[1].replace(",", "").replace("\"", "").trim();
             variables.put(identificador, valor); // Guardar la variable de texto
         } else {
             // Valor numérico
-            double valor = Double.parseDouble(partes[1].replace(",", "").replace(",", "").trim());
+            double valor = Double.parseDouble(partes[1].replace(",", "").trim());
             variables.put(identificador, valor); // Guardar el identificador sin el #
         }
     }
@@ -84,7 +84,7 @@ public class AnalizadorLexico {
 
     // Validar operaciones como numero + numero2,
     public static boolean validarOperacion(String texto) {
-        String operacionRegex = ".*[+\\-*/^].*,"; // Permite operaciones con ; al final
+        String operacionRegex = ".*[+\\-*/^].*,"; // Permite operaciones con , al final
         return texto.matches(operacionRegex);
     }
 
