@@ -49,11 +49,14 @@ public class AnalizadorLexico {
         }
     }
 
-    // Validar declaración de variables como #enum numero = 10, o #Text variable = "texto"
+    // Validar declaración de variables usando Validaciones
     public static boolean validarDeclaracion(String texto) {
-        String declaracionRegex = "#(enum|int|float|double)\\s+[a-zA-Z_][a-zA-Z0-9_]*\\s*=\\s*\\d+(\\.\\d+)?\\s*,$"; // Para números
-        String declaracion2Regex = "#(Text|String|char)\\s+[a-zA-Z_][a-zA-Z0-9_]*\\s*=\\s*\"[^\"]*\"\\s*,$"; // Para texto
-        return texto.matches(declaracionRegex) || texto.matches(declaracion2Regex);
+        String error = Validaciones.validarTodasLasDeclaraciones(texto);
+        if (error != null) {
+            System.out.println(error);
+            return false; // No válida
+        }
+        return true; // Válida
     }
 
     // Asignar variables al mapa de variables
@@ -83,7 +86,7 @@ public class AnalizadorLexico {
         }
     }
 
-    // Validar operaciones como numero + numero2,
+    // Validar operaciones como numero + numero2
     public static boolean validarOperacion(String texto) {
         String operacionRegex = ".*[+\\-*/^].*,"; // Permite operaciones con , al final
         return texto.matches(operacionRegex);
@@ -108,15 +111,10 @@ public class AnalizadorLexico {
     }
 
     // Imprimir las variables actuales en la consola
-    private static boolean variablesImpresas = false;
-
     public static void imprimirVariables() {
-        if (!variablesImpresas) {
-            System.out.println("Contenido de variables:");
-            for (Map.Entry<String, Object> entry : variables.entrySet()) {
-                System.out.println(entry.getKey() + " = " + entry.getValue());
-            }
-            variablesImpresas = true; // Marcar como ejecutada
+        System.out.println("Contenido de variables:");
+        for (Map.Entry<String, Object> entry : variables.entrySet()) {
+            System.out.println(entry.getKey() + " = " + entry.getValue());
         }
     }
 

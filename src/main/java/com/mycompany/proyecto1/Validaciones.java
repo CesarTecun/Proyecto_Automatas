@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.proyecto1;
 
-/**
- *
- * @author cesar
- */
 public class Validaciones {
 
     public static String validarEnum(String linea) {
@@ -27,12 +19,17 @@ public class Validaciones {
     }
 
     public static String validarDeclaracion(String linea) {
+        String invalidChars = validarCaracteresNoValidos(linea);
+        if (invalidChars != null) {
+            return "Error: carácter no válido '" + invalidChars + "' en la línea: " + linea;
+        }
+
         if (linea.startsWith("#enum")) {
             return validarEnum(linea);
         }
 
         if (!linea.contains("=")) {
-            return "Error al declarar " + linea + " lo correcto seria #enum";
+            return "Error al declarar " + linea + " lo correcto sería #enum";
         } else if (!linea.endsWith(",")) {
             return "Error: Falta ',' al final de la línea: " + linea;
         } else if (!linea.matches(".*\\d+(\\.\\d+)?")) {
@@ -43,6 +40,23 @@ public class Validaciones {
         return null;  // Sin errores
     }
 
+    // Método para validar caracteres no válidos
+    private static String validarCaracteresNoValidos(String linea) {
+        // Expresión regular para caracteres válidos (incluyendo letras, números, y algunos símbolos permitidos)
+        String validPattern = "[#a-zA-Z0-9_\\s=,+\\-*/^()]*";
+        if (!linea.matches(validPattern)) {
+            // Encuentra los caracteres no válidos
+            StringBuilder invalidChars = new StringBuilder();
+            for (char c : linea.toCharArray()) {
+                if (!Character.isLetterOrDigit(c) && "#=,+\\-*/^() ".indexOf(c) == -1) {
+                    invalidChars.append(c);
+                }
+            }
+            return invalidChars.toString();
+        }
+        return null;  // Sin caracteres no válidos
+    }
+
     public static String validarTodasLasDeclaraciones(String linea) {
         String error = validarDeclaracion(linea);
         if (error != null) {
@@ -50,4 +64,5 @@ public class Validaciones {
         }
         return null;  // Sin errores
     }
+
 }

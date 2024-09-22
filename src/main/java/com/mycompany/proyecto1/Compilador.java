@@ -165,11 +165,19 @@ public class Compilador extends javax.swing.JPanel {
         String[] lineas = texto.split("\\r?\\n");
         for (String linea : lineas) {
             linea = linea.trim();
+
+            // Validar caracteres no permitidos
+            if (!validarCaracteres(linea)) {
+                Salidas.append("Error: La línea contiene caracteres no permitidos: " + linea + "\n");
+                continue; // Saltar a la siguiente línea
+            }
+
             // Verificamos si la línea no termina con una coma
             if (!linea.endsWith(",")) {
                 Salidas.append("Error: La declaración debe terminar con una coma: " + linea + "\n");
                 continue; // Saltamos a la siguiente línea
             }
+
             // Validamos si es una declaración de variable
             if (AnalizadorLexico.validarDeclaracion(linea)) {
                 try {
@@ -194,9 +202,15 @@ public class Compilador extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_EjecutarActionPerformed
+    private boolean validarCaracteres(String linea) {
+        // Permite letras, números, espacios, signos de puntuación y operadores
+        String regex = "^[\\w\\s=,\\-+*/^()#]*"; // Ajusta según lo que necesites permitir
+        return linea.matches(regex);
+    }
 
     private void crearTablaTransiciones() {
-        String[] columnNames = {"Estado", "Entrada (a-z)", "Entrada (0-9)", "Operadores"};
+        //#enum valor = 10,
+        String[] columnNames = {"Estado", "Entrada (a-z)(0-9)", "Entrada (0-9)", "Operadores"};
         Object[][] data = {
             {"q0", "q1", "-", "-", "-"},
             {"q1", "q1", "q2", "-", "-"},
