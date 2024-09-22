@@ -59,8 +59,9 @@ public class AnalizadorLexico {
     // Asignar variables al mapa de variables
     public static void asignarVariable(String texto) {
         String[] partes = texto.split("\\s*=\\s*");
-        String identificadorConHash = partes[0].trim().split(" ")[1]; // Identificador con el tipo
-        String identificador = identificadorConHash.substring(1); // Identificador sin el #
+        String[] identificadorConHash = partes[0].trim().split(" ");
+        String identificador = identificadorConHash[1].trim(); // Obtener el identificador con el tipo
+        identificador = identificador.replaceFirst("#", ""); // Remover solo el #
 
         // Determina si el valor es numérico o de texto
         if (partes[1].contains("\"")) {
@@ -107,10 +108,15 @@ public class AnalizadorLexico {
     }
 
     // Imprimir las variables actuales en la consola
+    private static boolean variablesImpresas = false;
+
     public static void imprimirVariables() {
-        System.out.println("Contenido de variables:");
-        for (Map.Entry<String, Object> entry : variables.entrySet()) {
-            System.out.println(entry.getKey() + " = " + entry.getValue());
+        if (!variablesImpresas) {
+            System.out.println("Contenido de variables:");
+            for (Map.Entry<String, Object> entry : variables.entrySet()) {
+                System.out.println(entry.getKey() + " = " + entry.getValue());
+            }
+            variablesImpresas = true; // Marcar como ejecutada
         }
     }
 
