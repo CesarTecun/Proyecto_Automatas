@@ -1,5 +1,7 @@
 package com.mycompany.proyecto1;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -36,7 +38,9 @@ public class Compilador extends javax.swing.JPanel {
         Compilacion = new javax.swing.JButton();
         Limpiar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        Diagramita = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        Diagramita = new javax.swing.JTable();
 
         setPreferredSize(new java.awt.Dimension(1000, 700));
 
@@ -92,15 +96,36 @@ public class Compilador extends javax.swing.JPanel {
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Desktop\\Proyecto1modificado\\Proyecto_Automatas\\src\\main\\java\\Resources_image\\ab.jpg")); // NOI18N
         jLabel1.setPreferredSize(new java.awt.Dimension(200, 200));
 
-        javax.swing.GroupLayout DiagramitaLayout = new javax.swing.GroupLayout(Diagramita);
-        Diagramita.setLayout(DiagramitaLayout);
-        DiagramitaLayout.setHorizontalGroup(
-            DiagramitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        Diagramita.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Estado", "#", "enum", "Entrada (a-z, 0-9)", "Espacio", "=", "Numero (0-9)", "Operadores", ","
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(Diagramita);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3)
         );
-        DiagramitaLayout.setVerticalGroup(
-            DiagramitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 163, Short.MAX_VALUE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(279, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -111,24 +136,23 @@ public class Compilador extends javax.swing.JPanel {
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(Ejecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(Compilacion, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(Limpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 240, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Diagramita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(261, 261, 261))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,24 +160,25 @@ public class Compilador extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(Diagramita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(130, 130, 130)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(124, 124, 124)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Ejecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Compilacion, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Limpiar)))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                        .addGap(26, 26, 26))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Ejecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Compilacion, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Limpiar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -209,27 +234,30 @@ public class Compilador extends javax.swing.JPanel {
     }
 
     private void crearTablaTransiciones() {
-        //#enum valor = 10,
-        String[] columnNames = {"Estado", "Entrada (a-z)(0-9)", "Entrada (0-9)", "Operadores"};
         Object[][] data = {
-            {"q0", "q1", "-", "-", "-"},
-            {"q1", "q1", "q2", "-", "-"},
-            {"q2", "-", "-", "q3", "-"},
-            {"q3", "-", "-", "q3", "-"},
-            {"q4", "-", "-", "q3", "-"},
-            {"q5", "-", "-", "-", "-", "-"}
+            {"q0", "q0", "q1", "q1", "-", "-", "-", "-", "-"}, // Espera `#`, transita a `q1` al recibir `#`
+            {"q1", "-", "-", "q2", "-", "-", "-", "-", "-"}, // Espera `enum`, transita a `q2` al recibir `enum`
+            {"q2", "-", "-", "q2", "-", "q3", "-", "-", "-"}, // Permite caracteres (a-z, 0-9) para el nombre de variable, transita a `q3` al recibir `=`
+            {"q3", "-", "-", "-", "-", "-", "q4", "q5", "-"}, // Espera un número (0-9), transita a `q4` al recibir un número
+            {"q4", "-", "-", "-", "-", "-", "-", "q3", "q5"}, // Espera `,` para finalizar la declaración, transita a `q5` al recibir `,`
+            {"q5", "-", "-", "-", "-", "-", "-", "-", "-"} // Almacena la declaración y espera el siguiente operador o más declaraciones
         };
 
-        transitionTable = new JTable(new DefaultTableModel(data, columnNames));
-        transitionTable.setFillsViewportHeight(true);
+        // Suponiendo que Diagramita es un JTable
+        DefaultTableModel model = (DefaultTableModel) Diagramita.getModel();
+        model.setRowCount(0); // Limpiar filas existentes
 
-        // Crear un JScrollPane para la tabla de transiciones
-        JScrollPane scrollPane = new JScrollPane(transitionTable);
-        scrollPane.setPreferredSize(new java.awt.Dimension(400, 200)); // Ajusta el tamaño como desees
+        // Agregar datos a la tabla
+        for (Object[] row : data) {
+            model.addRow(row);
+        }
 
-        // Agregar el JScrollPane al JPanel Diagramita
-        Diagramita.setLayout(new java.awt.BorderLayout());
-        Diagramita.add(scrollPane, java.awt.BorderLayout.CENTER);
+        // Ajustar el modo de redimensionamiento de la tabla
+        Diagramita.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS); // Ajusta todas las columnas
+
+        // Actualiza la interfaz gráfica si es necesario
+        Diagramita.revalidate();
+        Diagramita.repaint();
     }
 
     private boolean esDeclaracionEnumCompleta(String linea) {
@@ -268,14 +296,16 @@ public class Compilador extends javax.swing.JPanel {
     private javax.swing.JTable Analisis_Lexico;
     private javax.swing.JButton Compilacion;
     private javax.swing.JTextArea Compiladoristo;
-    private javax.swing.JPanel Diagramita;
+    private javax.swing.JTable Diagramita;
     private javax.swing.JButton Ejecutar;
     private javax.swing.JButton Limpiar;
     private javax.swing.JScrollPane Panel_Scroleo;
     private javax.swing.JTextArea Salidas;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     // End of variables declaration//GEN-END:variables
 }
